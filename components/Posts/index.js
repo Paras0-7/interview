@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useContext} from 'react';
 import styled from '@emotion/styled';
 import Post from './Post';
 import Container from '../common/Container';
-import useWindowWidth from '../hooks/useWindowWidth';
+import { WindowWidthContext } from '../context/WindowWidthContext';
 
 const PostListContainer = styled.div(() => ({
   display: 'flex',
@@ -37,7 +37,7 @@ export default function Posts() {
   const [isLoading, setIsLoading] = useState(false);
   const [start, setStart] = useState(0);
   const [hasMorePosts, setHasMorePosts] = useState(true);
-  const { isSmallerDevice } = useWindowWidth();
+  const { isSmallerDevice } = useContext(WindowWidthContext)
 
   const limit = isSmallerDevice ? 5 : 10;
 
