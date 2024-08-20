@@ -46,6 +46,7 @@ const Content = styled.div(() => ({
 
 const Button = styled.button(() => ({
   position: 'absolute',
+  transform: 'translateY(-150px)',
   bottom: 0,
   backgroundColor: 'rgba(255, 255, 255, 0.5)',
   border: 'none',
@@ -55,6 +56,30 @@ const Button = styled.button(() => ({
   height: '50px',
 }));
 
+const UserDetails = styled.div(()=>({
+  display: 'flex',
+  alignItems:'center',
+  // justifyContent: 'center',
+  gap:'10px',
+  margin:'10px',
+
+  '& > p' : {
+       color:'green'
+  }
+}))
+
+const Logo = styled.div(()=>({
+  width:'50px',
+  aspectRatio:'1',
+  borderRadius: '100px',
+  color:'white',
+  fontWeight:'bolder',
+  background: 'grey',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+  
+}))
 const PrevButton = styled(Button)`
   left: 10px;
 `;
@@ -69,7 +94,7 @@ const Post = ({ post }) => {
   const handleNextClick = () => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({
-        left: 50,
+        left: 300,
         behavior: 'smooth',
       });
     }
@@ -78,24 +103,35 @@ const Post = ({ post }) => {
   const handlePrevClick = () => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({
-        left: -70,
+        left: -300,
         behavior: 'smooth',
       });
     }
   };
 
+  console.log(post)
+  const [first, last] = post.name.split(" ");
   return (
     <PostContainer>
+      <UserDetails>
+        <Logo>
+          <p>{first[0]}{last[0]}</p>
+        </Logo>
+        <div>
+          <h4>{post.name}</h4>
+          <p style={{fontSize:'12px'}}>{post.email}</p>
+        </div>
+      </UserDetails>
       <CarouselContainer>
-        <Carousel ref={carouselRef}>
-          {post.images.map((image, index) => (
-            <CarouselItem key={index}>
-              <Image src={image.url} alt={post.title} />
-            </CarouselItem>
-          ))}
-        </Carousel>
-        <PrevButton onClick={handlePrevClick}>&#10094;</PrevButton>
-        <NextButton onClick={handleNextClick}>&#10095;</NextButton>
+            <Carousel ref={carouselRef}>
+              {post.images.map((image, index) => (
+                <CarouselItem key={index}>
+                  <Image src={image.url} alt={post.title} />
+                </CarouselItem>
+              ))}
+            </Carousel>
+            <PrevButton onClick={handlePrevClick}>&#10094;</PrevButton>
+            <NextButton onClick={handleNextClick}>&#10095;</NextButton>
       </CarouselContainer>
       <Content>
         <h2>{post.title}</h2>
